@@ -1,0 +1,147 @@
+/* Minimal academic single-page (no build tools). */
+:root{
+  --text:#111;
+  --muted:#555;
+  --line:#e6e6e6;
+  --bg:#fff;
+  --link:#0b57d0;
+}
+
+*{ box-sizing:border-box; }
+
+html, body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  line-height:1.55;
+}
+
+a{ color:var(--link); text-decoration:none; }
+a:hover{ text-decoration:underline; }
+
+.wrapper{
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 28px 18px;
+}
+
+.layout{
+  display:flex;
+  gap: 28px;
+  align-items:flex-start;
+}
+
+.sidebar{
+  flex: 0 0 290px;
+  position: sticky;
+  top: 20px;
+  border-right: 1px solid var(--line);
+  padding-right: 18px;
+}
+
+.main{
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.name{
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+}
+
+.tagline{
+  margin: 0 0 14px 0;
+  color: var(--muted);
+}
+
+.photo{
+  width: 180px;
+  height: 180px;
+  border-radius: 12px;
+  background: #f3f3f3;
+  border: 1px solid var(--line);
+  display:block;
+  object-fit: cover;
+  margin: 14px 0 14px 0;
+}
+
+.links{
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
+  margin: 0 0 16px 0;
+  padding:0;
+  list-style:none;
+}
+
+.nav{
+  margin: 14px 0 0 0;
+  padding: 0;
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
+}
+
+.nav a{
+  color: var(--muted);
+}
+
+.nav a:hover{
+  color: var(--text);
+}
+
+.section{
+  padding: 6px 0 20px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.section:last-child{
+  border-bottom: none;
+}
+
+h2{
+  font-size: 18px;
+  margin: 0 0 10px 0;
+}
+
+p{ margin: 0 0 10px 0; }
+
+ul{
+  margin: 6px 0 0 20px;
+  padding:0;
+}
+
+.item{
+  margin-bottom: 10px;
+}
+
+.small{
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.pubs .pub-title{
+  font-weight: 600;
+}
+
+.footer{
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media (max-width: 860px){
+  .layout{ flex-direction:column; }
+  .sidebar{
+    position: static;
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+    padding-right:0;
+    padding-bottom: 18px;
+  }
+  .photo{ width: 140px; height: 140px; }
+}
