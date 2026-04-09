@@ -566,6 +566,11 @@
   </div>
   <script>
     var newsExpanded = false;
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.news-hidden').forEach(function(el) {
+        el.style.display = 'none';
+      });
+    });
     function toggleNews() {
       newsExpanded = !newsExpanded;
       var hidden = document.querySelectorAll('.news-hidden');
