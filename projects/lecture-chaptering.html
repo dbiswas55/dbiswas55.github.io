@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lecture Video Chaptering | Dipayan Biswas</title>
+  <meta name="description" content="How the VideoPoints chaptering service splits every newly uploaded lecture into titled chapters using Whisper, slide-frame deduplication, and Gemini 2.5 Flash with validated, schema-constrained output." />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .article { max-width: 760px; }
+    .back { display: inline-block; margin-bottom: 18px; font-size: 0.95rem; }
+    .article h1 { font-size: 1.9rem; margin-bottom: 10px; }
+    .lede { font-size: 1.08rem; color: var(--text); margin: 0 0 10px; }
+    .status { color: var(--muted); font-size: 0.95rem; margin: 0 0 6px; }
+    .status a { white-space: nowrap; }
+    figure { margin: 26px 0 8px; }
+    .diagram { overflow-x: auto; }
+    figure svg { width: 100%; min-width: 620px; height: auto; display: block; }
+    figcaption { color: var(--muted); font-size: 0.9rem; margin-top: 8px; }
+    .article section { padding-top: 22px; }
+    .article p { margin: 0 0 12px; }
+    ol.steps { margin: 8px 0 0 22px; padding: 0; }
+    ol.steps li { margin-bottom: 10px; padding-left: 4px; }
+    ol.steps strong { color: var(--text); }
+    pre {
+      background: var(--accent-soft);
+      border: 1px solid #dbe3f0;
+      border-radius: 8px;
+      padding: 12px 14px;
+      overflow-x: auto;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      margin: 10px 0 6px;
+    }
+    .note { color: var(--muted); font-size: 0.9rem; }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+  </style>
+</head>
+<body>
+  <div class="wrap article">
+    <a class="back" href="../index.html#projects">Back to Dipayan Biswas</a>
+
+    <h1>Lecture Video Chaptering on VideoPoints</h1>
+    <p class="lede">A background service that splits every newly uploaded lecture into titled chapters, so students can jump straight to the part they need.</p>
+    <p class="status">Built Jun to Aug 2025 for the NSF-funded <a href="https://videopoints.org" target="_blank" rel="noopener">VideoPoints</a> platform, where it runs in production. The code is private; this page describes the design.</p>
+
+    <figure>
+      <div class="diagram">
+      <svg viewBox="0 0 760 210" role="img" aria-labelledby="figTitle figDesc">
+        <title id="figTitle">Slides grouped into chapters</title>
+        <desc id="figDesc">A lecture shown as a row of sixteen slides along a time axis. Coloured brackets above group consecutive slides into four chapters. Every chapter starts and ends exactly on a slide change, with no gaps or overlaps.</desc>
+        <!-- chapter bands -->
+        <g font-family="inherit" font-size="13">
+          <rect x="10"  y="18" width="178" height="28" rx="6" fill="#dbeafe"/>
+          <rect x="194" y="18" width="226" height="28" rx="6" fill="#dcfce7"/>
+          <rect x="426" y="18" width="178" height="28" rx="6" fill="#fef9c3"/>
+          <rect x="610" y="18" width="140" height="28" rx="6" fill="#ede9fe"/>
+          <text x="20"  y="37" fill="#1e3a8a">Ch. 1: Introduction</text>
+          <text x="204" y="37" fill="#166534">Ch. 2: Core method</text>
+          <text x="436" y="37" fill="#854d0e">Ch. 3: Worked example</text>
+          <text x="620" y="37" fill="#5b21b6">Ch. 4: Recap</text>
+        </g>
+        <!-- slides -->
+        <g stroke="#cbd5e1" stroke-width="1" fill="#ffffff">
+          <rect x="10"  y="62" width="40" height="30" rx="3"/><rect x="56"  y="62" width="40" height="30" rx="3"/>
+          <rect x="102" y="62" width="40" height="30" rx="3"/><rect x="148" y="62" width="40" height="30" rx="3"/>
+          <rect x="194" y="62" width="40" height="30" rx="3"/><rect x="240" y="62" width="40" height="30" rx="3"/>
+          <rect x="286" y="62" width="40" height="30" rx="3"/><rect x="332" y="62" width="40" height="30" rx="3"/>
+          <rect x="378" y="62" width="40" height="30" rx="3"/><rect x="426" y="62" width="40" height="30" rx="3"/>
+          <rect x="472" y="62" width="40" height="30" rx="3"/><rect x="518" y="62" width="40" height="30" rx="3"/>
+          <rect x="564" y="62" width="40" height="30" rx="3"/><rect x="610" y="62" width="40" height="30" rx="3"/>
+          <rect x="656" y="62" width="40" height="30" rx="3"/><rect x="702" y="62" width="40" height="30" rx="3"/>
+        </g>
+        <g fill="#94a3b8">
+          <rect x="16" y="70" width="22" height="3" rx="1.5"/><rect x="62" y="70" width="26" height="3" rx="1.5"/>
+          <rect x="108" y="70" width="20" height="3" rx="1.5"/><rect x="154" y="70" width="24" height="3" rx="1.5"/>
+          <rect x="200" y="70" width="26" height="3" rx="1.5"/><rect x="246" y="70" width="18" height="3" rx="1.5"/>
+          <rect x="292" y="70" width="24" height="3" rx="1.5"/><rect x="338" y="70" width="22" height="3" rx="1.5"/>
+          <rect x="384" y="70" width="26" height="3" rx="1.5"/><rect x="432" y="70" width="20" height="3" rx="1.5"/>
+          <rect x="478" y="70" width="24" height="3" rx="1.5"/><rect x="524" y="70" width="26" height="3" rx="1.5"/>
+          <rect x="570" y="70" width="18" height="3" rx="1.5"/><rect x="616" y="70" width="24" height="3" rx="1.5"/>
+          <rect x="662" y="70" width="22" height="3" rx="1.5"/><rect x="708" y="70" width="26" height="3" rx="1.5"/>
+        </g>
+        <!-- chapter boundaries -->
+        <g stroke="#1d4ed8" stroke-width="2">
+          <line x1="191" y1="14" x2="191" y2="122"/>
+          <line x1="423" y1="14" x2="423" y2="122"/>
+          <line x1="607" y1="14" x2="607" y2="122"/>
+        </g>
+        <!-- time axis -->
+        <line x1="10" y1="112" x2="750" y2="112" stroke="#9ca3af" stroke-width="1"/>
+        <g font-family="inherit" font-size="12" fill="#5b6472">
+          <text x="10" y="132">0:00</text>
+          <text x="714" y="132">60:00</text>
+          <text x="10" y="168">Each box is one slide, kept after removing duplicate frames.</text>
+          <text x="10" y="188">Blue lines are chapter boundaries chosen by the model. They always fall on a slide change.</text>
+        </g>
+      </svg>
+      </div>
+      <figcaption>Illustration of the output for a one-hour lecture. Chapter titles here are placeholders, not real output.</figcaption>
+    </figure>
+
+    <section>
+      <h2>The problem</h2>
+      <p>Lecture recordings are often an hour long, and students rarely need all of it. Chapters let them find a topic quickly, and they also give the platform's summarizer clean units to work with, one summary per chapter.</p>
+      <p>Instructors upload lectures continuously, so chaptering had to happen automatically for every video, soon after it is uploaded.</p>
+    </section>
+
+    <section>
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li><strong>Extract the audio.</strong> ffmpeg pulls a mono 16 kHz track for speech recognition.</li>
+        <li><strong>Clean up the slide frames.</strong> A lecture produces many near-identical frames of the same slide. A three-stage filter removes them: a grid comparison catches consecutive duplicates, an edge comparison drops frames caught halfway through a slide transition, and a sliding window catches slides that reappear later.</li>
+        <li><strong>Get the text.</strong> Whisper transcribes the audio, and Tesseract OCR reads the text on each slide. Chaptering uses the transcript; the slide text is kept for later steps.</li>
+        <li><strong>Find the chapters.</strong> The transcript is split slide by slide, with timestamps, and Gemini 2.5 Flash groups the slides into titled chapters.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Chapters that follow the slides</h2>
+      <p>The model never picks raw timestamps. It sees the lecture as a numbered sequence of slides and answers with slide ranges, so every chapter begins and ends on a slide change.</p>
+      <p>The response is constrained by a JSON schema, so each chapter always arrives with a number, a title, and a start and end slide:</p>
+<pre>[
+  {
+    "section_number": 1,
+    "section_title": "...",
+    "slide_index_start": 1,
+    "slide_index_end": 4
+  },
+  {
+    "section_number": 2,
+    "section_title": "...",
+    "slide_index_start": 5,
+    "slide_index_end": 9
+  }
+]</pre>
+      <p class="note">Shape of the output. Values are illustrative.</p>
+      <p>The prompt scales the number of chapters to the lecture's length, about six to ten per hour, and asks the model to split any chapter that runs very long at its strongest topic shift.</p>
+    </section>
+
+    <section>
+      <h2>Checking every result</h2>
+      <p>A language model can return chapters that skip a slide or overlap each other, and the output goes straight to the platform. So every response is checked before it is saved: every slide must belong to exactly one chapter, and chapters must be contiguous, with no gaps and no overlaps.</p>
+      <p>If a check fails, the service generates the chapters again, up to two attempts in total. If both fail, rule-based correction fills the gaps and resolves the overlaps, so every video still gets valid chapters.</p>
+    </section>
+
+    <section>
+      <h2>Running in production</h2>
+      <p>The service runs in the background on the VideoPoints server. Every few minutes it looks for newly uploaded lectures, processes each one, and writes the chapters back to the platform, where they become the units the summarizer works on.</p>
+      <p>Each video is processed independently, so one failure doesn't hold up the rest. Every step is logged, and the service pauses each night for a scheduled restart. A batch mode handles one-off reprocessing.</p>
+    </section>
+
+    <section>
+      <h2>Tools</h2>
+      <div class="chips">
+        <span class="chip">Python</span>
+        <span class="chip">Gemini 2.5 Flash</span>
+        <span class="chip">Structured output</span>
+        <span class="chip">Whisper</span>
+        <span class="chip">Tesseract OCR</span>
+        <span class="chip">OpenCV</span>
+        <span class="chip">scikit-image</span>
+        <span class="chip">ffmpeg</span>
+        <span class="chip">MySQL</span>
+      </div>
+    </section>
+
+    <footer>
+      Dipayan Biswas &middot; <a href="../index.html">Home</a> &middot; <a href="https://github.com/dbiswas55" target="_blank" rel="noopener">GitHub</a> &middot; <a href="https://linkedin.com/in/dbiswas33" target="_blank" rel="noopener">LinkedIn</a>
+    </footer>
+  </div>
+</body>
+</html>
