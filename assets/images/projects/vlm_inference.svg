@@ -3,9 +3,9 @@
 
   <!-- Central hub box -->
   <rect x="108" y="76" width="84" height="48" rx="8" fill="#7c3aed" stroke="#6d28d9" stroke-width="1.5"/>
-  <text x="150" y="96" text-anchor="middle" font-size="8.5" font-weight="700" fill="white" font-family="sans-serif">Inference</text>
-  <text x="150" y="108" text-anchor="middle" font-size="8.5" font-weight="700" fill="white" font-family="sans-serif">Request</text>
-  <text x="150" y="119" text-anchor="middle" font-size="7" fill="#ddd6fe" font-family="sans-serif">unified API</text>
+  <text x="150" y="96" text-anchor="middle" font-size="8.5" font-weight="700" fill="white" font-family="sans-serif">vlmhub</text>
+  <text x="150" y="108" text-anchor="middle" font-size="8.5" font-weight="700" fill="white" font-family="sans-serif">one interface</text>
+  <text x="150" y="119" text-anchor="middle" font-size="7" fill="#ddd6fe" font-family="sans-serif">Model.generate()</text>
 
   <!-- Left backend pills -->
   <!-- Ollama -->
@@ -57,5 +57,5 @@
   <line x1="214" y1="152" x2="170" y2="124" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="3 2"/>
 
   <!-- Label -->
-  <text x="150" y="190" text-anchor="middle" font-size="8.5" fill="#6d28d9" font-family="sans-serif">VLM Inference Framework</text>
+  <text x="150" y="190" text-anchor="middle" font-size="8.5" fill="#6d28d9" font-family="sans-serif">Unified Inference Toolkit</text>
 </svg>

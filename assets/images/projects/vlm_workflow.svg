@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#ecfeff"/>
+
+  <!-- JSON workflow definition -->
+  <rect x="20" y="22" width="76" height="40" rx="6" fill="#ffffff" stroke="#67e8f9" stroke-width="1.2"/>
+  <text x="58" y="38" text-anchor="middle" font-size="8" font-weight="700" fill="#155e75" font-family="monospace">workflow.json</text>
+  <text x="58" y="52" text-anchor="middle" font-size="7" fill="#0e7490" font-family="monospace">steps: [1, 2, 3]</text>
+  <line x1="96" y1="42" x2="204" y2="42" stroke="#a5f3fc" stroke-width="1" stroke-dasharray="3 2"/>
+  <rect x="204" y="32" width="76" height="20" rx="10" fill="#cffafe" stroke="#22d3ee" stroke-width="1"/>
+  <text x="242" y="45" text-anchor="middle" font-size="7.5" font-weight="600" fill="#155e75" font-family="sans-serif">resumable run</text>
+
+  <!-- Step chain -->
+  <rect x="20" y="82" width="70" height="40" rx="8" fill="#0891b2" stroke="#0e7490" stroke-width="1.5"/>
+  <text x="55" y="99" text-anchor="middle" font-size="9" font-weight="700" fill="white" font-family="sans-serif">Step 1</text>
+  <text x="55" y="112" text-anchor="middle" font-size="7" fill="#cffafe" font-family="sans-serif">reason</text>
+
+  <rect x="115" y="82" width="70" height="40" rx="8" fill="#0891b2" stroke="#0e7490" stroke-width="1.5"/>
+  <text x="150" y="99" text-anchor="middle" font-size="9" font-weight="700" fill="white" font-family="sans-serif">Step 2</text>
+  <text x="150" y="112" text-anchor="middle" font-size="7" fill="#cffafe" font-family="sans-serif">answer</text>
+
+  <rect x="210" y="82" width="70" height="40" rx="8" fill="#0891b2" stroke="#0e7490" stroke-width="1.5"/>
+  <text x="245" y="99" text-anchor="middle" font-size="9" font-weight="700" fill="white" font-family="sans-serif">Step 3</text>
+  <text x="245" y="112" text-anchor="middle" font-size="7" fill="#cffafe" font-family="sans-serif">check</text>
+
+  <!-- Arrows between steps -->
+  <line x1="90" y1="102" x2="111" y2="102" stroke="#0e7490" stroke-width="1.6"/>
+  <polygon points="111,98 115,102 111,106" fill="#0e7490"/>
+  <line x1="185" y1="102" x2="206" y2="102" stroke="#0e7490" stroke-width="1.6"/>
+  <polygon points="206,98 210,102 206,106" fill="#0e7490"/>
+
+  <!-- Per-step outputs -->
+  <rect x="33" y="132" width="44" height="14" rx="3" fill="#ffffff" stroke="#a5f3fc" stroke-width="1"/>
+  <text x="55" y="142" text-anchor="middle" font-size="6.5" fill="#0e7490" font-family="monospace">out_1</text>
+  <rect x="128" y="132" width="44" height="14" rx="3" fill="#ffffff" stroke="#a5f3fc" stroke-width="1"/>
+  <text x="150" y="142" text-anchor="middle" font-size="6.5" fill="#0e7490" font-family="monospace">out_2</text>
+  <rect x="223" y="132" width="44" height="14" rx="3" fill="#ffffff" stroke="#a5f3fc" stroke-width="1"/>
+  <text x="245" y="142" text-anchor="middle" font-size="6.5" fill="#0e7490" font-family="monospace">out_3</text>
+  <line x1="55" y1="122" x2="55" y2="132" stroke="#67e8f9" stroke-width="1" stroke-dasharray="2 2"/>
+  <line x1="150" y1="122" x2="150" y2="132" stroke="#67e8f9" stroke-width="1" stroke-dasharray="2 2"/>
+  <line x1="245" y1="122" x2="245" y2="132" stroke="#67e8f9" stroke-width="1" stroke-dasharray="2 2"/>
+
+  <!-- Model backend -->
+  <rect x="90" y="156" width="120" height="16" rx="8" fill="#cffafe" stroke="#22d3ee" stroke-width="1"/>
+  <text x="150" y="167" text-anchor="middle" font-size="7.5" font-weight="600" fill="#155e75" font-family="sans-serif">local or cloud models</text>
+
+  <text x="150" y="190" text-anchor="middle" font-size="8.5" fill="#0e7490" font-family="sans-serif">Multi-Step LLM/VLM Workflows</text>
+</svg>

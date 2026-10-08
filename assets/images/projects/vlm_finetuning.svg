@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#fff7ed"/>
+
+  <!-- Input chart image -->
+  <rect x="16" y="28" width="78" height="62" rx="5" fill="#ffffff" stroke="#fdba74" stroke-width="1.2"/>
+  <line x1="26" y1="80" x2="86" y2="80" stroke="#9a3412" stroke-width="1"/>
+  <line x1="26" y1="80" x2="26" y2="36" stroke="#9a3412" stroke-width="1"/>
+  <rect x="32" y="62" width="9" height="18" fill="#fb923c"/>
+  <rect x="45" y="50" width="9" height="30" fill="#f97316"/>
+  <rect x="58" y="56" width="9" height="24" fill="#fb923c"/>
+  <rect x="71" y="42" width="9" height="38" fill="#ea580c"/>
+
+  <!-- Question bubble -->
+  <rect x="16" y="100" width="78" height="22" rx="8" fill="#ffedd5" stroke="#fdba74" stroke-width="1"/>
+  <text x="55" y="114" text-anchor="middle" font-size="7.5" fill="#9a3412" font-family="sans-serif">Q: which is highest?</text>
+
+  <!-- Model: frozen base + LoRA -->
+  <rect x="116" y="34" width="84" height="82" rx="8" fill="#ea580c" stroke="#c2410c" stroke-width="1.5"/>
+  <text x="158" y="54" text-anchor="middle" font-size="9.5" font-weight="700" fill="white" font-family="sans-serif">Gemma 3</text>
+  <text x="158" y="66" text-anchor="middle" font-size="7" fill="#ffedd5" font-family="sans-serif">4-bit base (frozen)</text>
+  <rect x="126" y="76" width="64" height="14" rx="7" fill="#fed7aa"/>
+  <text x="158" y="86" text-anchor="middle" font-size="7.5" font-weight="700" fill="#9a3412" font-family="sans-serif">+ LoRA</text>
+  <rect x="126" y="95" width="64" height="14" rx="7" fill="#fed7aa"/>
+  <text x="158" y="105" text-anchor="middle" font-size="7.5" font-weight="700" fill="#9a3412" font-family="sans-serif">QLoRA</text>
+
+  <line x1="94" y1="60" x2="116" y2="70" stroke="#c2410c" stroke-width="1.4"/>
+  <line x1="94" y1="111" x2="116" y2="96" stroke="#c2410c" stroke-width="1.4"/>
+
+  <!-- Accuracy before/after (4B, ChartQA) -->
+  <text x="252" y="34" text-anchor="middle" font-size="7.5" font-weight="700" fill="#9a3412" font-family="sans-serif">ChartQA (4B)</text>
+  <line x1="220" y1="120" x2="286" y2="120" stroke="#9a3412" stroke-width="1"/>
+  <rect x="228" y="76" width="20" height="44" rx="2" fill="#fdba74"/>
+  <rect x="258" y="58" width="20" height="62" rx="2" fill="#ea580c"/>
+  <text x="238" y="72" text-anchor="middle" font-size="7.5" font-weight="700" fill="#9a3412" font-family="sans-serif">43.6</text>
+  <text x="268" y="54" text-anchor="middle" font-size="7.5" font-weight="700" fill="#9a3412" font-family="sans-serif">61.6</text>
+  <text x="238" y="131" text-anchor="middle" font-size="7" fill="#9a3412" font-family="sans-serif">base</text>
+  <text x="268" y="131" text-anchor="middle" font-size="7" fill="#9a3412" font-family="sans-serif">tuned</text>
+  <line x1="200" y1="75" x2="218" y2="75" stroke="#c2410c" stroke-width="1.4"/>
+  <polygon points="218,71 222,75 218,79" fill="#c2410c"/>
+
+  <!-- Training details -->
+  <rect x="62" y="146" width="176" height="18" rx="9" fill="#ffedd5" stroke="#fdba74" stroke-width="1"/>
+  <text x="150" y="158" text-anchor="middle" font-size="7.5" font-weight="600" fill="#9a3412" font-family="sans-serif">TRL + PEFT &#183; L40S GPUs via Slurm</text>
+
+  <text x="150" y="190" text-anchor="middle" font-size="8.5" fill="#c2410c" font-family="sans-serif">VLM Fine-tuning for Chart QA</text>
+</svg>
