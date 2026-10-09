@@ -107,8 +107,31 @@ nav {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
+  align-items: center;
   gap: 10px 16px;
 }
+.nav-resume {
+  padding: 1px 12px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  font-weight: 600;
+}
+.nav-resume:hover {
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+}
+
+/* ── Technical skills ── */
+.skills-list { display: flex; flex-direction: column; gap: 8px; }
+.skill-row {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 12px;
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+.skill-cat { font-weight: 700; }
 section { padding-top: 26px; scroll-margin-top: 56px; }
 header { scroll-margin-top: 56px; }
 h2 {
@@ -453,6 +476,10 @@ footer {
   font-size: 0.82rem;
 }
 
+@media (max-width: 900px) {
+  .nav-inner { font-size: 0.9rem; }
+  .nav-links { gap: 8px 12px; }
+}
 @media (max-width: 760px) {
   header { grid-template-columns: 1fr; }
   .photo { align-items: flex-start; }
@@ -460,6 +487,7 @@ footer {
   .wrap { padding-left: 16px; padding-right: 16px; }
   .nav-inner { padding-left: 16px; padding-right: 16px; flex-direction: column; align-items: flex-start; }
   .nav-links { justify-content: flex-start; }
+  .skill-row { grid-template-columns: 1fr; gap: 2px; }
   .news-list li { flex-wrap: wrap; gap: 4px; }
   .news-date { min-width: unset; }
   .pub-card { flex-direction: column; }
