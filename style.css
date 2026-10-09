@@ -44,17 +44,10 @@ h1 {
   margin-bottom: 14px;
 }
 .intro p { margin: 0 0 12px; }
-.links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 14px;
-  margin-top: 10px;
-  font-size: 0.98rem;
-}
 .photo {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
   padding-top: 8px;
 }
 .photo img {
@@ -63,6 +56,29 @@ h1 {
   border-radius: 12px;
   border: 1px solid var(--line);
   display: block;
+}
+/* ── Contact card under photo ── */
+.contact {
+  width: 220px;
+  margin-top: 14px;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+.contact-role { font-weight: 700; }
+.contact-org { color: var(--muted); margin-bottom: 10px; }
+.contact-list { list-style: none; margin: 0; padding: 0; }
+.contact-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  overflow-wrap: anywhere;
+}
+.contact-list svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: var(--muted);
 }
 nav {
   position: sticky;
@@ -77,9 +93,21 @@ nav {
   margin: 0 auto;
   padding: 10px 20px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px 16px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px 24px;
   font-size: 0.95rem;
+}
+.nav-name {
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+}
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px 16px;
 }
 section { padding-top: 26px; scroll-margin-top: 56px; }
 header { scroll-margin-top: 56px; }
@@ -427,10 +455,11 @@ footer {
 
 @media (max-width: 760px) {
   header { grid-template-columns: 1fr; }
-  .photo { justify-content: flex-start; }
+  .photo { align-items: flex-start; }
   h1 { font-size: 1.8rem; }
   .wrap { padding-left: 16px; padding-right: 16px; }
-  .nav-inner { padding-left: 16px; padding-right: 16px; }
+  .nav-inner { padding-left: 16px; padding-right: 16px; flex-direction: column; align-items: flex-start; }
+  .nav-links { justify-content: flex-start; }
   .news-list li { flex-wrap: wrap; gap: 4px; }
   .news-date { min-width: unset; }
   .pub-card { flex-direction: column; }
